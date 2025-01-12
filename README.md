@@ -1,6 +1,6 @@
 # Portfolio
 
-My name is Andrew Harrison a CS student and this is a short collection of my projects here in github with summaries and easy access to the code samples
+A short collection of my projects here in github with summaries and easy access to the code samples
 
 ## Projects
 ### [Python Blackjack](https://github.com/Anduithe3rd/Blackjack-Python-assignment)
