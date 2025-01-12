@@ -11,4 +11,4 @@ A short collection of my projects here in github with summaries and easy access 
 - Arcade-style score-getter 3D driving game where the player chases a storm in a car to gain points, as more points are gained more responsibilities are given to the player making the experience similar to that of a management game all while still keeping the core mechanic of driving near a storm to gain points
 - Skills - Unity, C#, Physics-based vehicle dynamics, Game Design
 - Code Samples:
-  - **[NewDriving Script](https://github.com/Anduithe3rd/DrivingGame/blob/main/NewDriving.cs)**: Handles the car's physics, suspension, acceleration, deceleration, and steering
+  - **[NewDriving Script](https://github.com/Anduithe3rd/Storm-Chaser-Game/blob/main/Assets/Scripts/NewDriving.cs)**: Handles the car's physics, suspension, acceleration, deceleration, and steering
