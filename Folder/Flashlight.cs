@@ -39,6 +39,9 @@ public class Flashlight : MonoBehaviour
         }
     }
     //use of AnimationCurve to simulate how a crank flashlight works
+
+    // - When key is pressed power the flashlight a certain amount, the curve has an arc so that when pressed the intensity will peak for a moment before stabilizing
+    // - at a slightly lower intensity to give better feel and add to horror elements
     private IEnumerator AnimateIntensity(){
         //to see when our animation is happening to avoid overlaying the effect
         isAnimating = true;
