@@ -75,7 +75,9 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
+    // check if we are touching the ground using a raycast
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight + playerHeightOffset, isGround);
+        //debugging used to see the raycast and see if it matches the players height
         UnityEngine.Debug.DrawRay(transform.position, Vector3.down * 0.5f, Color.green);
         Forward = Input.GetAxisRaw("Vertical");
         Side = Input.GetAxisRaw("Horizontal");
@@ -102,21 +104,23 @@ public class PlayerController : MonoBehaviour
     #region  Movement
     private void Moving(){
 
-        
+        //normalized movement
         moveDir = orient.forward * Forward + orient.right * Side;
 
+        //running out of stamina
         if(stamina <= 0){
             StaminaEmpty();
         }
 
 
-        
+        //ability to run, uses stamina
         if(Input.GetKey(KeyCode.LeftShift) && stamina > 0 && canSprint && grounded){
             rb.AddForce(moveDir.normalized * sprintSpeed * sprintMultiplier, ForceMode.Force);
             stamina -= staminaMax * staminaDetRate;
             UpdateStaminaChange();
         }
         else{
+            //walking speed
             rb.AddForce(moveDir.normalized * moveSpeed * sprintMultiplier, ForceMode.Force);
         }
 
@@ -128,10 +132,6 @@ public class PlayerController : MonoBehaviour
             playerHeight = 0.5f;
             transform.localScale = new Vector3(1.0f, 0.5f, 1.0f);
             transform.position -= new Vector3(0.0f, 0.5f, 0.0f);
-            //Bad, bad, bad! Change to using a raycast to determine offset from the floor an adjust that accordingly.
-            //As is, we are subject to physics nonesense if we are on a slope.
-
-
 
         } else if(!Input.GetKey(KeyCode.LeftControl) && isCrouch)
         {
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //SpeedControl was originally created to make sure the player doesnt move to quickly/slide 
+    //SpeedControl was originally created to make sure the player doesn't move to quickly/slide when on ground
     private void SpeedControl(){
 
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -160,6 +160,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    //when our character runs out of stamina begins the recovery process as well as slowing them to punish wasting all stamina
     #region Stamina
     private void StaminaEmpty(){
         stamina = 0;
@@ -168,30 +169,31 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(StaminaCooldown());
 
     }
-
+    
     private IEnumerator StaminaCooldown(){
         yield return new WaitForSecondsRealtime(3);
         UpdateStaminaChange();
     }
 
+    //In charge of tracking our stamina and when it has changed
     private void StaminaTracker(){
-
+        //if our stamina is not max and the character has not ran in the last 3 seconds begin recovering
         if(Time.time - staminaChangeTime >= 3f && stamina < staminaMax){
             stamina += staminaMax * staminaRecovRate;
 
-
+            //Give our player back the ability to run after recovering a certain amount of stamina
             if(stamina > staminaMax * staminaThresh){
                 canSprint = true;
                 sprintSpeed = moveSpeed * sprintMultiplier;
             }
         }
-
+        //don't let our stamina go over the maximum
         if(stamina > staminaMax){
             stamina = staminaMax;
         }
 
     }
-
+    //helps track if our stamina has changed for staminaTracker()
     private void UpdateStaminaChange(){
         if(stamina != lastStamina){
             staminaChangeTime = Time.time;
