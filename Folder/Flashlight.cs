@@ -23,27 +23,31 @@ public class Flashlight : MonoBehaviour
     }
     void Update()
     {
+        
         li.intensity = intens;
-
+        //when we press F key power 'crank' the light
         if(Input.GetKeyDown(KeyCode.F)){
             StartCoroutine(AnimateIntensity());
+            //play cranking sound
             crankSound.Play();
 
-        }
-
+        }    
+        //constant deterioration of flashlight power
         if(intens > 0){
             intens -= detiorate * Time.deltaTime;
             if(intens < 0) intens = 0;
         }
     }
-
+    //use of AnimationCurve to simulate how a crank flashlight works
     private IEnumerator AnimateIntensity(){
-
+        //to see when our animation is happening to avoid overlaying the effect
         isAnimating = true;
+        
         float duration = lightCurve.keys[lightCurve.length - 1].time;
         float elapsed = 0f;
         float initialIntensity = intens;
 
+        //over a duration of time change the light intesnsity to match that of the animation curve
         while(elapsed < duration){
             elapsed += Time.deltaTime;
 
