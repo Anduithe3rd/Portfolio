@@ -1,6 +1,6 @@
 # Portfolio
 
-Hello my name is Andrew Harrison and this is a short collection of my projects here on GitHub with summaries and easy access to the code samples
+A short collection of my projects here on GitHub with summaries and easy access to the code samples
 
 ## Projects
 ### [Storm Chaser Car](https://github.com/Anduithe3rd/Storm-Chaser-Game)
